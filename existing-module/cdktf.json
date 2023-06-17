@@ -1,0 +1,17 @@
+{
+  "language": "go",
+  "app": "go run main.go",
+  "codeMakerOutput": "generated",
+  "projectId": "00099097-80f4-44b3-87de-395a7a69041f",
+  "sendCrashReports": "true",
+  "terraformProviders": [],
+  "terraformModules": [
+    {
+      "name": "vpc",
+      "source": "../modules/vpc"
+    }
+  ],
+  "context": {
+
+  }
+}
