@@ -17,6 +17,7 @@ type MultiStackConfig struct {
 func NewMultiStack(scope constructs.Construct, id string, name string, config MultiStackConfig) cdktf.TerraformStack {
 	var stack cdktf.TerraformStack
 	if config.useNative {
+		// If native is set create a VPC using the CDKTF directly in Golang
 		stack = cdktf.NewTerraformStack(scope, &id)
 		provider.NewAwsProvider(stack, jsii.String("AWS"), &provider.AwsProviderConfig{
 			Region: jsii.String(config.Region),
@@ -28,6 +29,8 @@ func NewMultiStack(scope constructs.Construct, id string, name string, config Mu
 			},
 		})
 	} else {
+		// If native is not set creating using a regular Terraform module. The CDK when run
+		// will generate Go files from the module code so it can be executed programatically
 		stack = cdktf.NewTerraformStack(scope, &id)
 		provider.NewAwsProvider(stack, jsii.String("AWS"), &provider.AwsProviderConfig{
 			Region: jsii.String(config.Region),
@@ -42,10 +45,12 @@ func NewMultiStack(scope constructs.Construct, id string, name string, config Mu
 
 func main() {
 	app := cdktf.NewApp(nil)
+	// One stack (state file) using native SDK
 	NewMultiStack(app, "native-module", "native-vpc", MultiStackConfig{
 		Region:    "eu-west-2",
 		useNative: true,
 	})
+	// One stack (state file) using a generated Terraform module code in the SDK
 	NewMultiStack(app, "existing-module", "existing-vpc", MultiStackConfig{
 		Region:    "eu-west-2",
 		useNative: false,
