@@ -1,4 +1,5 @@
 all:
+	cdktf get
 	make native-deploy
 	make existing-deploy
 
