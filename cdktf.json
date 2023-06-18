@@ -8,7 +8,7 @@
   "terraformModules": [
     {
       "name": "vpc",
-      "source": "../modules/vpc"
+      "source": "./modules/vpc"
     }
   ],
   "context": {
