@@ -23,6 +23,9 @@ func NewMultiStack(scope constructs.Construct, id string, name string, config Mu
 		})
 		nativevpc.NewVpc(stack, jsii.String(name), &nativevpc.VpcConfig{
 			CidrBlock: jsii.String("10.100.0.0/16"),
+			Tags: &map[string]*string{
+				"Name": &name,
+			},
 		})
 	} else {
 		stack = cdktf.NewTerraformStack(scope, &id)
